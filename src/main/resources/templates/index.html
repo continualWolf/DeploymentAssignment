@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ASS Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container my-2">
+            <h1>Login</h1>
+            <hr>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="button" class="btn btn-primary" id="submitLoginButton">Submit</button>
+            </form>
+        </div>
+
+        <script>
+            var baseUrl = window.location.origin;  // Get base URL
+            
+            $('#submitLoginButton').on('click', function(e){
+               submitLogin(e); 
+            });
+            
+            function submitLogin(e) {
+                e.preventDefault();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: baseUrl + '/login',
+                    data: {
+                        email: $('#email').val(),
+                        password: $('#password').val()
+                    },
+                    success: function(response) {
+                        window.location.href = `${baseUrl}/index`;
+                    },
+                    error: function(error) {
+                        alert('Login request failed.');
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

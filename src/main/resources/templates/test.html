@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ASS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <script>
+            var baseUrl = window.location.origin;  // Get base URL
+        </script>
+        <link rel="stylesheet" href="/main.css" type="text/css">
+    <body>
+        <div class="content-container">
+            <div class="navigation">
+                <div class="nav-item active" id="homeButton">Home</div>
+                <div class="nav-item" onclick="location.href=baseUrl + '/assignments'" id="assignmentNavButton">Assignments</div>
+                <div class="nav-item">Grade Book</div>
+                <div class="nav-item">Messages</div>
+                <div class="nav-item">Settings</div>
+            </div>
+            <div class="main-content">
+                <div class="island-row halfHeight" style="padding-top: 30px;padding-right: 30px;padding-left: 30px;">
+                    <div class="island halfWidth" style="display: flex;align-items: center;">
+                        <div class="island-content">
+                            <h1>Welcome Back, <span data-th-text="${user.user.firstName}">User</span>!</h1>
+                            <p><b>Study Advice:</b> Work as hard as you can and then be happy in the knowledge you couldn't have done any more.</p>
+                            <div>
+                                <button class="mainButton">Go to Assignments</button>
+                                <button class="mainButtonInverse">View Grade Book</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="island halfWidth" style="overflow:hidden">
+                        <img src="/painting.svg" alt="Painting Image" style="object-fit:cover;">
+                    </div>
+                </div>
+                <div class="island-row halfHeight" style="padding-bottom: 30px;padding-right: 30px;padding-left: 30px;">
+                    <div class="island quarterWidth">
+                        <div class="island-content">
+                            <h2>Notifications</h2>
+                            <div class="data-row-container">
+                                <div class="data-row-pill info">New Assignment released</div>
+                                <div class="data-row-pill issue">Assignment Overdue</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="island quarterWidth">
+                        <div class="island-content">
+                            <h2>Stats</h2>
+                            <div class="data-row-container">
+                                <div class="statContainer">
+                                    <p>Submitted: 63%</p>
+                                    <div class="progressBar"></div>
+                                </div>
+                                <div class="statContainer">
+                                    <p>Grade Average: 15%</p>
+                                    <div class="progressBar"></div>
+                                </div>
+                                <div class="statContainer">
+                                    <p>Late Submission: 97%</p>
+                                    <div class="progressBar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="island halfWidth">
+                        <div class="island-content">
+                            <h2>Upcoming Deadlines</h2>
+                            <div class="data-row-container">
+                                <div class="data-row-pill"><span>Test</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

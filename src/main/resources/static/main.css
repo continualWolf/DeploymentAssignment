@@ -1,0 +1,232 @@
+:root {
+    --purple: #6442D6;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+h1{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 46px;
+}
+
+h2{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 28px;
+}
+
+.content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.navigation {
+    width: 10%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    background: #FAFAFA;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.21);
+}
+.nav-item {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #1C1B1D;
+    text-align: center;
+    height: 45px;
+}
+.nav-item.active, .nav-item:hover { 
+    background: linear-gradient(to right, var(--purple) 0%, rgba(52, 35, 112, 0.87) 100%);
+    color: white;
+    border-left: 3px solid var(--purple);
+    cursor: pointer;
+}
+.main-content{
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.island-row{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}
+
+.island{
+    height:100%;
+    background: #FAFAFA;
+    border-radius: 13px;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.07);
+}
+
+.island-content{
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.halfWidth{
+    width:50%;
+}
+
+.quarterWidth{
+    width:25%;
+}
+
+.halfHeight{
+    height:50%;
+}
+
+.mainButton{
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    background: var(--purple);
+    border: 1px solid var(--purple);
+    font-size: 13px;
+    font-weight: 500;
+    height: 44px;
+    width: 146px;
+}
+
+.mainButtonInverse{
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: var(--purple);
+    background: white;
+    border: 1px solid var(--purple);
+    font-size: 13px;
+    font-weight: 500;
+    height: 44px;
+    width: 146px;
+}
+
+.data-row-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-row-pill{
+    width: 100%;
+    height: 65px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.14);
+    font-weight: 500;
+    font-size: 15px;
+    padding-left: 10px;
+    align-items: center;
+    display: flex;
+}
+
+.data-row-pill.issue{
+    color: #FF0000;
+}
+
+.data-row-pill.info{
+    color: #00478A;
+}
+
+.progressBar{
+    height: 40px;
+    width: 100%;
+    background: linear-gradient(to left, #FFF 37%, var(--purple) 37%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.20);
+    border-radius: 25px;
+    overflow: visible;
+}
+
+.statContainer{
+    font-weight: 500;
+}
+
+.popUpOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popUpMainContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 50%;
+    max-width: 600px;
+}
+
+.popUpHeader {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.popUpBody {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.popUpBodyButtons{
+    display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 35px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.popUpBodyButtons button{
+    background: var(--purple);
+  color: white;
+  border: none;
+  width: 100px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.popUpBodyButtons .secondaryBtn{
+    background: white;
+  color: var(--purple);
+  border: 1px solid var(--purple);
+  width: 100px;
+  border-radius: 5px;
+  font-weight: 500;
+}

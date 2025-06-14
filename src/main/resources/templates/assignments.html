@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ASS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <script>
+            var baseUrl = window.location.origin;  // Get base URL
+            
+            $(document).ready(function(){
+                $('.js-assignmentButton').on('click', function(){
+                   let id = $(this).attr('data-id');
+                   
+                   $('.js-submissionButton').show();
+                   
+                   $.ajax({
+                       method: 'GET',
+                       url: `${baseUrl}/getAssignmentDetails/${id}`,
+                       success: (assignment) => {
+                           $('.js-submissionButton').attr('data-id', id);
+                           $('#assignmentId').val(id);
+                           $('#assignmentTitle').html(assignment.title);
+                           $('#assignmentDescription').html(assignment.description);
+                           
+                           var date = moment(assignment.dueDate);
+                            var formattedDate = date.format('DD/MM/YYYY');
+
+                            $('#assignmentDueDate').html(formattedDate);
+
+                            if(moment().isAfter(date, 'day')){
+                                $('.js-submissionButton').hide();
+                            }
+                       },
+                       error: (e) => {
+                           alert(`There has been an error when trying to find the assignment details! <br /> Check Below : <br /> ${e}`);
+                       }
+                   });
+                });
+                
+                $('.js-submissionButton').on('click', function(){
+                   let id = $(this).attr('data-id');
+                   
+                   toggleSubAssignmentPopUp();
+                });
+                
+                $('.js-closePopUpButton').on('click', function() {
+                    $(this).closest('.popUpOverlay').hide();
+                });
+                
+                $('#submitAssignment').on('click', function(){
+                    var fileInput = $('#upload')[0];
+                    var file = fileInput.files[0];
+
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            var fileData = e.target.result;
+                            
+                            console.log(fileData);
+                            
+                            $.ajax({
+                                url: `${baseUrl}/submitAssignment`,
+                                type: 'POST',
+                                data: {
+                                    AssignmentId: $('#assignmentId').val(),
+                                    Document: fileData
+                                },
+                                success: function(response) {
+                                    console.log('Response:', response);
+                                    alert('Assignment submitted successfully!');
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error:', error);
+                                    alert('Failed to submit the assignment.');
+                                }
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('No file selected.');
+                    }
+                });
+                
+                $('.js-assignmentButton').first().click();
+            });
+            
+            function toggleSubAssignmentPopUp(){
+                let subDisplay = $('#submitAssignmentPopUp').css('display') == 'none' ? 'flex' : 'none';
+                $('#submitAssignmentPopUp').css('display', subDisplay);
+                
+                $('#output').html('');
+                $('#upload').val('');
+            }
+        </script>
+        <link rel="stylesheet" href="/main.css" type="text/css">
+    </head>
+    <body>
+        <div class="content-container">
+            <div class="navigation">
+                <div class="nav-item" onclick="location.href=baseUrl + '/index'">Home</div>
+                <div class="nav-item active">Assignments</div>
+                <div class="nav-item">Grade Book</div>
+                <div class="nav-item">Messages</div>
+                <div class="nav-item">Settings</div>
+            </div>
+            <div class="main-content">
+                <div class="island-row" style="padding-top: 30px;padding-right: 30px;padding-left: 30px; height: 94%;">
+                    <div class="island halfWidth">
+                        <div class="island-content">
+                            <h2>Assignments</h2>
+                            <div class="data-row-container" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                                <div data-th-each="entry : ${listAssignments}" class="data-row-pill js-assignmentButton" data-th-data-id="${entry.key}" style="display: flex; justify-content: center; align-items: center;">
+    <p><span data-th-text="${entry.value[0].assignment.title}"></span>:
+        <b data-th-text="${entry.value[0].status <= 1 ? 'Not Started' : 'Submitted' + (entry.value[1] <= 1 ? '' : '(' + entry.value[1] + ' submissions)')}"></b></p>
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="island halfWidth">
+                        <div class="island-content">
+                            <input type="hidden" id="assignmentId" />
+                            <input type="hidden" id="studentId" />
+                            <h2 id="assignmentTitle">Assignment Details</h2>
+                            <div>Assignment Due Date: <b id="assignmentDueDate"></b></div>
+                            <div id="assignmentDescription">
+                                
+                            </div>
+                            <div class="row">
+                                <button class="mainButton js-submissionButton" data-id="0">Start Submission</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popUpOverlay" id="submitAssignmentPopUp" style="display:none">
+                    <div class="popUpMainContent">
+                        <div class="popUpHeader">Assignment Submission</div>
+                        <div class="popUpBody">
+                            <div class="column">
+                                <div class="row">
+                                    <p>Link assignment document below :</p>
+                                </div>
+                                <div class="row">
+                                    <input type="file" id="upload" accept=".docx, .pdf" />
+                                </div>
+                                <div class="row">
+                                    <div id="output" style="display: none"></div>
+                                </div>
+                                <div class="popUpBodyButtons">
+                                    <button type="button" class="js-closePopUpButton secondaryBtn">Cancel</button>
+                                    <button type="button" id="submitAssignment">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
